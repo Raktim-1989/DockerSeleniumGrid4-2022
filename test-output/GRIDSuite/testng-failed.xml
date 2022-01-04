@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="3" guice-stage="DEVELOPMENT" name="Failed suite [GRIDSuite]" parallel="tests">
+  <test thread-count="3" name="Test2(failed)" parallel="tests">
+    <parameter name="browser" value="FIREFOX"/>
+    <classes>
+      <class name="dockergrid.dockerseleniumgrid">
+        <methods>
+          <include name="tearDown"/>
+          <include name="setUp"/>
+          <include name="linkedOnFFTest"/>
+        </methods>
+      </class> <!-- dockergrid.dockerseleniumgrid -->
+    </classes>
+  </test> <!-- Test2(failed) -->
+</suite> <!-- Failed suite [GRIDSuite] -->

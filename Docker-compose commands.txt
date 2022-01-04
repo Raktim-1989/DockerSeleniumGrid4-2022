@@ -1,0 +1,51 @@
+# To execute this docker-compose yml file use `docker-compose -f docker-compose-v2.yaml up`
+# Add the `-d` flag at the end for detached execution
+# To stop the execution, hit Ctrl+C, and then `docker-compose -f docker-compose-v2.yaml down`
+
+#scale the containers
+docker-compose -f docker-compose-v2.yaml up --scale chrome=2 -d
+
+##scale multiple containers at the same time
+docker-compose -f docker-compose-v2.yaml up --scale chrome=2 --scale firefox=2 -d
+
+
+
+###For individual set-ups ####
+
+1] pull images
+
+   - pull selenium hub images --> docker pull selenium/hub
+   - pull node-chrome-debug image --> docker pull selenium/node-chrome-debug
+   - pull node-firefox-debug image --> docker pull selenium/node-firefox-debug
+   - pull node-opera image  ----->     docker pull selenium/node-opera
+
+2] start network
+   
+   - docker network create gridnetwork
+
+3] Create and run the containers and link them
+
+   Hub-->  docker run -d -p 4445:4444 --net gridnetwork --name seleniumHub selenium/hub
+
+   Node--> docker run -d -p 4446:5900 --net gridnetwork -e HUB_HOST=seleniumHub --name chromeNode selenium/node-chrome-debug
+   
+           docker run -d -p 4447:5900 --net gridnetwork -e HUB_HOST=seleniumHub --name firefoxNode selenium/node-firefox-debug
+    
+           docker run -d -p 4448:5900 --net gridnetwork -e HUB_HOST=seleniumHub --name operaNode selenium/node-opera-debug
+    
+
+//if we want docker to randomly allocate port use the following command
+
+docker run -d -P --net gridnetwork -e HUB_HOST=seleniumHub --name chromeNode selenium/node-chrome-debug
+
+##re-start the docker containers
+
+docker start $(docker ps -a -q)
+
+   
+
+
+           
+           
+   
+   
